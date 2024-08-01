@@ -19,7 +19,8 @@ defmodule CommandCenter.MixProject do
   def application do
     [
       mod: {CommandCenter.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools],
+      included_applications: [EventDriven.Application]
     ]
   end
 
@@ -56,6 +57,8 @@ defmodule CommandCenter.MixProject do
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
+      {:commanded, "~> 1.4"},
+      {:eventstore, "~> 1.4"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"}
