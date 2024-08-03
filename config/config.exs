@@ -9,7 +9,22 @@ import Config
 
 config :command_center,
   ecto_repos: [CommandCenter.Repo],
+  event_stores: [EventDriven.EventStore],
   generators: [timestamp_type: :utc_datetime]
+
+config :command_center, EventDriven.Application,
+  event_store: [
+    adapter: Commanded.EventStore.Adapters.EventStore,
+    event_store: EventDriven.EventStore
+  ],
+  pubsub: :local,
+  registry: :local
+
+config :commanded,
+  event_store_adapter: Commanded.EventStore.Adapters.EventStore
+
+# config :commanded_ecto_projections,
+#  repo: CommandCenter.Repo
 
 # Configures the endpoint
 config :command_center, CommandCenterWeb.Endpoint,

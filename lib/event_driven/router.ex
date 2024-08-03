@@ -2,14 +2,15 @@ defmodule EventDriven.Router do
   @moduledoc false
   use Commanded.Commands.Router
 
+  alias EventDriven.Commands.AddPackToInventory
+
   alias EventDriven.{
-    Commands.AddPackToInventory,
     TicketPack,
-    TicketPackHandler
+    TicketPackCommandHandler
   }
 
   dispatch(AddPackToInventory,
-    to: TicketPackHandler,
+    to: TicketPackCommandHandler,
     aggregate: TicketPack,
     identity: :pack_number
   )

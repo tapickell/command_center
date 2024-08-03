@@ -10,7 +10,7 @@ config :command_center, CommandCenter.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
-config :event_driven, EventDriven.EventStore,
+config :command_center, EventDriven.EventStore,
   serializer: Commanded.Serialization.JsonSerializer,
   username: "postgres",
   password: "postgres",

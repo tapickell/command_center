@@ -8,6 +8,8 @@ defmodule CommandCenter.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      # EventDriven.Supervisor,
+      EventDriven.Application,
       CommandCenterWeb.Telemetry,
       CommandCenter.Repo,
       {DNSCluster, query: Application.get_env(:command_center, :dns_cluster_query) || :ignore},
@@ -16,7 +18,6 @@ defmodule CommandCenter.Application do
       {Finch, name: CommandCenter.Finch},
       # Start a worker by calling: CommandCenter.Worker.start_link(arg)
       # {CommandCenter.Worker, arg},
-      EventDriven.Supervisor,
       # Start to serve requests, typically the last entry
       CommandCenterWeb.Endpoint
     ]
