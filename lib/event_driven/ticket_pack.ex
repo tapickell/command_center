@@ -1,11 +1,11 @@
 defmodule EventDriven.TicketPack do
   @moduledoc false
   alias EventDriven.Events.TicketPackAdded
-  alias EventDriven.TicketPack
+  alias CommandCenter.Tickets.Inventory
 
   defstruct [:pack_number, :game_id, :location_id, :added_at, :archived_at]
 
-  def add_to_inventory(%TicketPack{}, params) do
+  def add_to_inventory(%__MODULE__{}, params) do
     case Inventory.add_pack(params) do
       {:ok, pack} ->
         created_at = DateTime.utc_now()
@@ -24,7 +24,7 @@ defmodule EventDriven.TicketPack do
     end
   end
 
-  def apply(%TicketPack{} = tp, %TicketPackAdded{} = event) do
+  def apply(%__MODULE__{} = tp, %TicketPackAdded{} = event) do
     %TicketPackAdded{
       game_id: game_id,
       pack_number: pack_number,
@@ -32,7 +32,7 @@ defmodule EventDriven.TicketPack do
       added_at: added_at
     } = event
 
-    %TicketPack{
+    %__MODULE__{
       tp
       | game_id: game_id,
         pack_number: pack_number,

@@ -1,4 +1,4 @@
 defmodule EventDriven.Commands.AddPackToInventory do
-  @enforce_keys [:pack_number, :ticket_numbers]
-  defstruct [:pack_number, :ticket_numbers]
+  @enforce_keys [:game_id, :pack_number, :ticket_numbers, :location_id]
+  defstruct [:game_id, :pack_number, :ticket_numbers, :location_id]
 end

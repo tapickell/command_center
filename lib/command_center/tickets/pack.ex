@@ -5,15 +5,16 @@ defmodule CommandCenter.Tickets.Pack do
   schema "packs" do
     field :pack_number, :string
     field :game_id, :string
-    field :location_id, :string
+    field :location_id, :integer
 
-    field :added_at, :timestamp
-    field :archived_at, :timestamp
+    field :added_at, :utc_datetime
+    field :archived_at, :utc_datetime
     # belongs_to :game, Game
     # belongs_to :location, Location
   end
 
-  @doc false
+  def changeset(attrs), do: changeset(%__MODULE__{}, attrs)
+
   def changeset(pack, attrs) do
     pack
     |> cast(attrs, [

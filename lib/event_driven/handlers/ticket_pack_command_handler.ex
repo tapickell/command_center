@@ -8,18 +8,18 @@ defmodule EventDriven.TicketPackCommandHandler do
   }
 
   def handle(%TicketPack{} = aggregate, %AddPackToInventory{} = command) do
-    %AddPackToInventory{
-      game_id: game_id,
-      pack_number: pack_number,
-      location_id: location_id
-    } = command
+    # %AddPackToInventory{
+    #  game_id: game_id,
+    #  pack_number: pack_number,
+    #  location_id: location_id
+    # } = command
 
     case TicketPack.add_to_inventory(aggregate, Map.from_struct(command)) do
       {:ok, event} ->
         {:ok, event}
 
-      {:error, error} ->
-        {:error, error}
+      {:error, _error} = error ->
+        error
     end
   end
 end
