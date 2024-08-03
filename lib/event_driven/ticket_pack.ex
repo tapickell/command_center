@@ -6,22 +6,22 @@ defmodule EventDriven.TicketPack do
   defstruct [:pack_number, :game_id, :location_id, :added_at, :archived_at]
 
   def add_to_inventory(%TicketPack{}, params) do
-    %{game_id: game_id, pack_number: pack_number, location_id: location_id} = params
+    case Inventory.add_pack(params) do
+      {:ok, pack} ->
+        created_at = DateTime.utc_now()
 
-    # is this where an actual insertion would be ??
-    # Nope this is later in a projection
-    # this should call changeset operations on Inventory.add_pack..
-    # catch errors and return or return ok event
-    created_at = DateTime.utc_now()
+        event = %TicketPackAdded{
+          pack_number: pack.pack_number,
+          game_id: pack.game_id,
+          location_id: pack.location_id,
+          added_at: created_at
+        }
 
-    event = %TicketPackAdded{
-      pack_number: pack_number,
-      game_id: game_id,
-      location_id: location_id,
-      added_at: created_at
-    }
+        {:ok, event}
 
-    {:ok, event}
+      {:error, _cs} = error ->
+        error
+    end
   end
 
   def apply(%TicketPack{} = tp, %TicketPackAdded{} = event) do

@@ -34,21 +34,4 @@ defmodule CommandCenter.Tickets.Pack do
   def validate(pack) do
     Ecto.Changeset.apply_action(pack, :update)
   end
-
-  # WIP - feels like rewriting Ecto to make changes persist to the struct
-  defp defered_validation(%Ecto.Changeset{valid?: true, changes: changes} = cs) do
-    schema = cs.__struct__
-    writable_fields = schema.__schema__(:writable_fields)
-    changes = Map.take(changes, writable_fields)
-
-    if seems_legit?() do
-      {:ok, %Pack{}}
-    else
-      {:error, :pack_already_exists}
-    end
-  end
-
-  defp defered_validation(changeset), do: changeset
-
-  defp seems_legit?, do: true
 end
