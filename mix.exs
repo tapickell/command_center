@@ -77,6 +77,8 @@ defmodule CommandCenter.MixProject do
       setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
+      "event_store.setup": ["event_store.create", "event_store.init"],
+      "event_store.reset": ["event_store.drop", "event_store.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind command_center", "esbuild command_center"],
